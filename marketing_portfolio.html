@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --text: #f0ede6;
+      --text-muted: #888;
+      --text-faint: #444;
+      --accent: #c9a96e;
+      --accent-dim: rgba(201,169,110,0.12);
+      --tag-email: rgba(93,202,165,0.12);
+      --tag-email-text: #5dcaa5;
+      --tag-paid: rgba(127,119,221,0.12);
+      --tag-paid-text: #a09ae8;
+      --tag-gtm: rgba(201,169,110,0.15);
+      --tag-gtm-text: #c9a96e;
+      --radius: 12px;
+      --radius-sm: 6px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .hero-tag {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border: 1px solid;
+    }
+    .hero-tag.email { background: var(--tag-email); color: var(--tag-email-text); border-color: var(--tag-email-text); }
+    .hero-tag.paid  { background: var(--tag-paid); color: var(--tag-paid-text); border-color: var(--tag-paid-text); }
+    .hero-tag.gtm   { background: var(--tag-gtm); color: var(--tag-gtm-text); border-color: var(--tag-gtm-text); }
+
+    /* SECTION */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+    }
+    .section-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-count {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+      letter-spacing: 0.1em;
+    }
+
+    /* CAMPAIGN CARD */
+    .campaign-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .campaign-card:hover { border-color: var(--border-hover); }
+
+    .card-header {
+      padding: 1.75rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+    }
+    .card-brand {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.4rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .card-meta {
+      text-align: right;
+    }
+    .card-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .card-type.email { background: var(--tag-email); color: var(--tag-email-text); }
+    .card-type.paid  { background: var(--tag-paid); color: var(--tag-paid-text); }
+    .card-type.gtm   { background: var(--tag-gtm); color: var(--tag-gtm-text); }
+    .card-date {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-faint);
+    }
+
+    /* STORY STEPS */
+    .story-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .story-step {
+      padding: 1.5rem 1.75rem;
+      border-right: 1px solid var(--border);
+    }
+    .story-step:last-child { border-right: none; }
+    .step-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .step-num {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .step-content {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* METRICS ROW */
+    .metrics-row {
+      display: flex;
+      gap: 0;
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+    }
+    .metric {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .metric:last-child { border-right: none; }
+    .metric-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--text);
+      font-weight: 700;
+      display: block;
+    }
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* MY ROLE BADGE */
+    .role-bar {
+      padding: 0.9rem 2rem;
+      background: var(--accent-dim);
+      border-top: 1px solid rgba(201,169,110,0.2);
+      font-size: 0.8rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .role-bar strong { font-weight: 500; color: var(--text); }
+
+    /* ABOUT SECTION */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .about-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .about-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .about-block p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .skills-list li {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      text-align: center;
+      padding: 5rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .contact-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+    .contact-section p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .cta-link {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: #0e0e0e;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .cta-link:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span { font-size: 0.8rem; color: var(--text-faint); }
+
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero, .section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .story-steps { grid-template-columns: 1fr; }
+      .story-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .story-step:last-child { border-bottom: none; }
+      .card-header { grid-template-columns: 1fr; }
+      .card-meta { text-align: left; }
+      .about-grid { grid-template-columns: 1fr; }
+      .metrics-row { flex-direction: column; }
+      .metric { border-right: none; border-bottom: 1px solid var(--border); }
+      .metric:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Your Name</div>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Marketing Portfolio</p>
+    <h1>Campaigns that <em>move</em> the market.</h1>
+    <p class="hero-sub">
+      I'm a marketing strategist specializing in email, paid media, and go-to-market launches for major brands. Here's a look at how I think, plan, and execute.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag email">Email Marketing</span>
+      <span class="hero-tag paid">Paid Media</span>
+      <span class="hero-tag gtm">Go-to-Market</span>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <div class="section-header">
+      <h2>Selected Work</h2>
+      <div class="section-divider"></div>
+      <span class="section-count">3 campaigns</span>
+    </div>
+
+    <!-- CAMPAIGN 1: Paid Media — ABM Sales Play #3 -->
+    <div class="campaign-card">
+      <div class="card-header">
+        <div>
+          <p class="card-brand">Intuit Mailchimp · FY26 Q2</p>
+          <h3 class="card-title">ABM Sales Play #3: Klaviyo Switcher & Digital Sales Paid Social Campaign</h3>
+        </div>
+        <div class="card-meta">
+          <span class="card-type paid">Paid Media</span>
+          <span class="card-date">Jan–Feb 2026</span>
+        </div>
+      </div>
+      <div class="story-steps">
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">1</span> The Brief</div>
+          <p class="step-content">
+            Mailchimp needed to convert high-value Shopify merchants ($750+ MRR) away from Klaviyo and toward Mailchimp's Digital Sales Business (DSB) tier. The January launch window required a phased creative approach: first optimizing existing ecommerce assets, then delivering Klaviyo switcher-specific ads — all aligned to an updated messaging hierarchy featuring customer testimonials and competitive differentiators.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">2</span> Strategy</div>
+          <p class="step-content">
+            I developed a full-funnel paid social creative brief spanning Meta and LinkedIn across Attract and Engage stages. The strategy centered on two message tracks: DSB ecommerce social proof (Shopify integration, automation ROI claims) and Klaviyo switcher conquest messaging ("Break Up With Klaviyo" creative, migration offers, 42% cost savings). LinkedIn ads used personalization macros (%FIRSTNAME%, %COMPANYNAME%) for account-level relevance, while Meta prioritized testimonial-anchored static and carousel formats. Deliverables included 16 DSB assets, 6 Klaviyo switcher assets, and 64+ lines of supporting copy.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">3</span> Outcome</div>
+          <p class="step-content">
+            The phased asset delivery enabled Sales Play #3 to launch on schedule on January 14. The creative framework established a repeatable switcher campaign playbook — reusable testimonial-led creative with modular copy — that was carried forward into broader Q3 planning.
+          </p>
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">22</span>
+          <span class="metric-label">Total assets delivered</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">2</span>
+          <span class="metric-label">Message tracks (DSB + Klaviyo)</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">Meta + LinkedIn</span>
+          <span class="metric-label">Channels activated</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">On time</span>
+          <span class="metric-label">1/14 launch hit</span>
+        </div>
+      </div>
+      <div class="role-bar">
+        My role: <strong>Creative brief strategy, messaging architecture, copy development, channel spec planning (Meta & LinkedIn)</strong>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN 2: Go-to-Market — Digital Sales Play #2 -->
+    <div class="campaign-card">
+      <div class="card-header">
+        <div>
+          <p class="card-brand">Intuit Mailchimp · Digital Sales</p>
+          <h3 class="card-title">Go-to-Market: Digital Sales Play #2 — Shopify E-Commerce ABM Launch</h3>
+        </div>
+        <div class="card-meta">
+          <span class="card-type gtm">Go-to-Market</span>
+          <span class="card-date">Oct–Dec 2025</span>
+        </div>
+      </div>
+      <div class="story-steps">
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">1</span> The Brief</div>
+          <p class="step-content">
+            Mailchimp needed to win more high-value e-commerce deals ($750+ MRR) among Food &amp; Beverage and Health &amp; Wellness Shopify merchants — a segment where Klaviyo dominated mindshare and Mailchimp historically lacked traction. The play needed to launch within 1.5 weeks of the mobilization workshop and build the capability foundation ahead of a larger Q3 initiative in January.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">2</span> Strategy</div>
+          <p class="step-content">
+            I collaborated across marketing and sales to design a full-funnel ABM motion targeting ~88K identified Shopify accounts. The go-to-market included: a segmented paid social plan across Meta, LinkedIn, and DV360 (Attract → Engage → Lead Gen); a webinar series anchored to Shopify integration and product features; personalized LCM nurture sequences; in-product discovery placements within QuickBooks Online; and Sales-aligned outbound sequences (12-touch, 3 weeks) with ICP-specific email templates and call scripts. A 30%-off introductory pricing offer was paired with complimentary migration services to accelerate Klaviyo switchers at the $750+ MRR threshold.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">3</span> Outcome</div>
+          <p class="step-content">
+            Play #2 launched October 6, 2025 as planned. The campaign targeted 88K accounts with marketing reach, with Sales prospecting 5–10K and a target of 100–220 SQLs created. Projected MRR from the play was $45–105K, with a $1.5K average deal value. The program also built the ABM muscle and data infrastructure (technographic scoring, tiered SFDC account views, playbook templates) carried into the January Play #3 launch.
+          </p>
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">88K</span>
+          <span class="metric-label">Accounts reached</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">100–220</span>
+          <span class="metric-label">SQLs targeted</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">$45–105K</span>
+          <span class="metric-label">Projected MRR</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">6 channels</span>
+          <span class="metric-label">Paid, webinar, nurture, IPD, web, search</span>
+        </div>
+      </div>
+      <div class="role-bar">
+        My role: <strong>GTM strategy, messaging map development, ABM channel planning, cross-functional launch coordination (Marketing, Sales, Analytics)</strong>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN 3: Email Marketing — DTC 2026 Webinar -->
+    <div class="campaign-card">
+      <div class="card-header">
+        <div>
+          <p class="card-brand">Intuit Mailchimp · B2B Marketing</p>
+          <h3 class="card-title">DTC 2026: The New Rules of Growth — Expert Webinar Series</h3>
+        </div>
+        <div class="card-meta">
+          <span class="card-type email">Email Marketing</span>
+          <span class="card-date">Mar 2026</span>
+        </div>
+      </div>
+      <div class="story-steps">
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">1</span> The Brief</div>
+          <p class="step-content">
+            Mailchimp was largely absent from the ecommerce expert conversation — Klaviyo dominated mindshare with DTC operators. The brief was to reinsert Mailchimp into that conversation by producing a high-credibility, external expert-led event targeting mid-market DTC prospects and customers. Success meant building pipeline, not just awareness: the stretch registration goal was 1,000, with a 50% MQL rate target.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">2</span> Strategy</div>
+          <p class="step-content">
+            I helped design and execute a virtual roundtable featuring 7 external DTC operators and investors — including Nik Sharma, Rabah Rahil, and Ari Murray — with a combined 400K+ follower reach and $500M+ in DTC revenue managed. Promotion ran across 3 prospect email sends, 1:1 sales outreach sequences, organic social, panelist networks, and ICP landing pages. The event was designed to generate a durable on-demand asset, seeding into nurture flows, YouTube, and quarterly newsletters post-event.
+          </p>
+        </div>
+        <div class="story-step">
+          <div class="step-label"><span class="step-num">3</span> Outcome</div>
+          <p class="step-content">
+            The event exceeded its stretch registration goal with 1,210 registrants and 410 live attendees. 1 in 4 live attendees converted to a sales-qualified lead — 118 leads routed to sales (114 net new, 4 re-engaged). 624 paid accounts attended (51% of all registrants), validating the ICP targeting. 264 free-to-paid upgrade targets were added to the nurture pipeline.
+          </p>
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <span class="metric-value">1,210</span>
+          <span class="metric-label">Registrants (121% of goal)</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">118</span>
+          <span class="metric-label">Leads to sales</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">23%</span>
+          <span class="metric-label">Attendee-to-SQL conversion</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value">51%</span>
+          <span class="metric-label">Paid accounts in audience</span>
+        </div>
+      </div>
+      <div class="role-bar">
+        My role: <strong>Program strategy, speaker sourcing and management, email promotion planning, post-event lead routing and on-demand distribution</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <h2>About Me</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>Background</h3>
+        <p>
+          I'm a [Your Title] with X years of experience building and scaling campaigns for major brands across [industries]. I specialize in connecting business objectives to audience insight — and translating both into measurable marketing programs.
+        </p>
+      </div>
+      <div class="about-block">
+        <h3>Core skills</h3>
+        <ul class="skills-list">
+          <li>Email Marketing</li>
+          <li>Paid Social</li>
+          <li>Paid Search</li>
+          <li>Go-to-Market Strategy</li>
+          <li>Campaign Analytics</li>
+          <li>Creative Briefing</li>
+          <li>A/B Testing</li>
+          <li>Marketing Automation</li>
+          <li>Cross-functional Leadership</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <h2>Let's talk.</h2>
+    <p>Open to new opportunities. Available for a conversation.</p>
+    <a href="mailto:your@email.com" class="cta-link">Get in touch →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Your Name · Marketing Portfolio</span>
+    <span>© 2025</span>
+  </footer>
+
+</body>
+</html>
